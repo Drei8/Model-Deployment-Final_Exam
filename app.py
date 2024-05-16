@@ -33,7 +33,7 @@ def main():
         model = load_model()
         prediction = predict(image, model)
 
-        classes = ['Class1', 'Class2', 'Class3', 'Class4', 'Class5']  # Replace with actual class names
+        classes = ['bus', 'car', 'motorcycle', 'train', 'truck']  # Replace with actual class names
         st.subheader("Prediction:")
         st.write(classes[np.argmax(prediction)], f"({np.max(prediction)*100:.2f}% certain)")
 
