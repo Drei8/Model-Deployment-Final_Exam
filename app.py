@@ -57,7 +57,8 @@ def predict(image):
     image = image.resize((192, 192))  # Resize the image
     image = np.array(image) / 255.0  # Normalize pixel values
     image = np.expand_dims(image, axis=0)  # Add batch dimension
-    
+
+    model = load_model()
     prediction = model.predict(image)
     
     return prediction
@@ -76,6 +77,7 @@ def main():
         st.image(image, caption="Uploaded Image", use_column_width=True)
 
         # Make prediction
+        model = load_model()
         prediction = predict(image)
 
         # Display the prediction
