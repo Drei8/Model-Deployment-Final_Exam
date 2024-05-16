@@ -7,7 +7,7 @@ import numpy as np
 @st.cache_resource
 def load_model():
     # Assuming create_model() is defined earlier
-    model.load_model("BestModel.h5")  # Load the trained weights
+    model=tf.keras.models.load_model("BestModel.h5")  # Load the trained weights
     return model
 
 # Function to make predictions
