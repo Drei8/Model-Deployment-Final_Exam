@@ -83,7 +83,7 @@ def main():
         # Display the prediction
         classes = ['bus', 'car', 'motorcycle', 'train', 'truck']  # Define your class names
         st.subheader("Prediction:")
-        st.write(classes[np.argmax(prediction)]
+        st.write(classes[np.argmax(prediction)])
 
 if __name__ == "__main__":
     main()
