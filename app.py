@@ -65,7 +65,7 @@ def predict(image):
 
 # Streamlit app
 def main():
-    st.title("Vehicle Classification App")
+    st.title("Vehicle Type Classification")
     st.text("Upload an image of a vehicle to classify it.")
 
     # File uploader
