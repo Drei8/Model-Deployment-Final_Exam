@@ -6,7 +6,7 @@ import numpy as np
 # Function to load the model
 @st.cache_resource
 def load_model():
-    model = create_model()  # Assuming create_model() is defined earlier
+    # Assuming create_model() is defined earlier
     model.load_weights("BestModel.h5")  # Load the trained weights
     return model
 
