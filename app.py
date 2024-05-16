@@ -1,32 +1,50 @@
 import streamlit as st
 import tensorflow as tf
-
-@st.cache_resource
-def load_model():
-  model=tf.keras.models.load_model("BestModel.h5")
-  return model
-model=load_model()
-st.write("""
-# Vehicle Type Classification"""
-)
-file=st.file_uploader("Choose vehicle photo from computer",type=["jpg","png"])
-
-import cv2
-from PIL import Image,ImageOps
+from PIL import Image
 import numpy as np
-def import_and_predict(image_data,model):
-    size=(192,192)
-    image=ImageOps.fit(image_data,size)
-    img=np.asarray(image)
-    img_reshape=img[np.newaxis,...]
-    prediction=model.predict(img_reshape)
+
+# Function to load the model
+@st.cache(allow_output_mutation=True)
+def load_model():
+    model = create_model()  # Assuming create_model() is defined earlier
+    model.load_weights("BestModel.h5")  # Load the trained weights
+    return model
+
+# Function to make predictions
+def predict(image):
+    # Preprocess the image
+    image = image.resize((192, 192))  # Resize the image
+    image = np.array(image) / 255.0  # Normalize pixel values
+    image = np.expand_dims(image, axis=3)  # Add batch dimension
+    
+    # Load the model
+    model = load_model()
+    
+    # Make prediction
+    prediction = model.predict(image)
+    
     return prediction
-if file is None:
-    st.text("Please upload an image file")
-else:
-    image=Image.open(file)
-    st.image(image,use_column_width=True)
-    prediction=import_and_predict(image,model)
-    class_names=['bus','car','motorcycle','train','truck']
-    string="OUTPUT : "+class_names[np.argmax(prediction)]
-    st.success(string)
+
+# Streamlit app
+def main():
+    st.title("Vehicle Classification App")
+    st.text("Upload an image of a vehicle to classify it.")
+
+    # File uploader
+    uploaded_file = st.file_uploader("Choose an image...", type=["jpg", "jpeg", "png"])
+
+    if uploaded_file is not None:
+        # Display the uploaded image
+        image = Image.open(uploaded_file)
+        st.image(image, caption="Uploaded Image", use_column_width=True)
+
+        # Make prediction
+        prediction = predict(image)
+
+        # Display the prediction
+        classes = ['bus', 'car', 'motorcycle', 'train', 'truck']  # Define your class names
+        st.subheader("Prediction:")
+        st.write(classes[np.argmax(prediction)], f"({np.max(prediction)*100:.2f}% certain)")
+
+if __name__ == "__main__":
+    main()
