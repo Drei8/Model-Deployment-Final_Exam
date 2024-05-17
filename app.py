@@ -2,8 +2,7 @@ import streamlit as st
 import tensorflow as tf
 from PIL import Image
 import numpy as np
-from keras.layers import Conv2D, MaxPooling2D, Activation, Dropout, BatchNormalization, SeparableConv2D, GlobalAveragePooling2D, Dense
-from keras.optimizers import Adam
+
 
 # Load the model
 @st.cache(allow_output_mutation=True)
