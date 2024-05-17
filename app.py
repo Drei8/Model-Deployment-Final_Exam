@@ -10,7 +10,7 @@ def load_model():
     model = tf.keras.models.load_model("BestModel.h5")
     return model
 
-# Function to make predictions
+
 def predict(image, model):
     image = image.resize((192, 192))
     image = np.array(image) / 255.0
@@ -20,7 +20,7 @@ def predict(image, model):
     
     return prediction
 
-# Streamlit app
+
 def main():
     st.title("Vehicle Type Classification")
     st.text("Upload an image of a vehicle to classify it.")
@@ -34,9 +34,10 @@ def main():
         model = load_model()
         prediction = predict(image, model)
 
-        classes = ['bus', 'car', 'motorcycle', 'train', 'truck']  # Replace with actual class names
+        classes = ['bus', 'car', 'motorcycle', 'train', 'truck']  
         st.subheader("Prediction:")
-        st.write(classes[np.argmax(prediction)], f"({np.max(prediction)*100:.2f}% certain)")
+        string="OUTPUT : "+classes[np.argmax(prediction)]
+        st.success(string)
 
 if __name__ == "__main__":
     main()
